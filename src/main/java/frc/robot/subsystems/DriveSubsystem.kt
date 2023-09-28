@@ -5,11 +5,15 @@ import frc.robot.Constants
 
 import com.revrobotics.CANSparkMax
 import com.revrobotics.CANSparkMaxLowLevel.MotorType
+import edu.wpi.first.wpilibj2.command.Command
+import frc.robot.commands.DriveTeleopCommand
+
 
 object DriveSubsystem : SubsystemBase() {
 
     private val leftMotor: CANSparkMax
     private val rightMotor: CANSparkMax
+
 
     init {
         // Set the default command for a subsystem here.
@@ -17,7 +21,11 @@ object DriveSubsystem : SubsystemBase() {
         leftMotor = CANSparkMax(Constants.DriveConstants.LEFT_MOTOR_PORT, MotorType.kBrushless)
         rightMotor = CANSparkMax(Constants.DriveConstants.RIGHT_MOTOR_PORT, MotorType.kBrushless)
 
+        rightMotor.setInverted(false)
         leftMotor.setInverted(true)
+
+        leftMotor.burnFlash()
+        rightMotor.burnFlash()
     }
 
     fun setLeftMotorSpeed(speed: Double) {
@@ -34,8 +42,9 @@ object DriveSubsystem : SubsystemBase() {
     }
 
     fun drive(speed: Double, rotation: Double) {
-        leftMotor.set(speed + rotation)
-        rightMotor.set(speed - rotation)
+
+        leftMotor.set(speed - (rotation/2))
+        rightMotor.set(speed + (rotation/2))
     }
 
     fun tankDrive(leftSpeed: Double, rightSpeed: Double) {

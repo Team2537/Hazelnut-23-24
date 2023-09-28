@@ -5,8 +5,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DriveTeleopCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -26,11 +28,12 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-    
-    // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final CommandXboxController driverController =
-            new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
+    private final XboxController driverController = new XboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
+
+    private final DriveTeleopCommand driveTeleopCommand = new DriveTeleopCommand(driverController);
+
+
+
     
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -38,6 +41,9 @@ public class RobotContainer
     {
         // Configure the trigger bindings
         configureBindings();
+
+        // Set the default drive command to split-stick arcade drive
+        DriveSubsystem.INSTANCE.setDefaultCommand(driveTeleopCommand);
     }
     
     
@@ -53,12 +59,9 @@ public class RobotContainer
     private void configureBindings()
     {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-        new Trigger(exampleSubsystem::exampleCondition)
-                .onTrue(new ExampleCommand(exampleSubsystem));
         
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
-        driverController.b().whileTrue(exampleSubsystem.exampleMethodCommand());
     }
     
     

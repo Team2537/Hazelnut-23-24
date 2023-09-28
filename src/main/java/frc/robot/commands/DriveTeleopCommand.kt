@@ -1,10 +1,12 @@
 package frc.robot.commands
 
+import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj2.command.CommandBase
 import frc.robot.subsystems.DriveSubsystem
 
-class DriveTeleopCommand : CommandBase() {
+class DriveTeleopCommand(controller: XboxController) : CommandBase() {
     private val driveSubsystem = DriveSubsystem
+    private val m_Controller = controller
 
 
     init {
@@ -14,7 +16,9 @@ class DriveTeleopCommand : CommandBase() {
 
     override fun initialize() {}
 
-    override fun execute() {}
+    override fun execute() {
+        driveSubsystem.drive(m_Controller.getLeftY() / 2, m_Controller.getRightX() / 4)
+    }
 
     override fun isFinished(): Boolean {
         // TODO: Make this return true when this Command no longer needs to run execute()
