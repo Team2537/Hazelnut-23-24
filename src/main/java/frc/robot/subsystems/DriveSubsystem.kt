@@ -5,6 +5,7 @@ import frc.robot.Constants
 
 import com.revrobotics.CANSparkMax
 import com.revrobotics.CANSparkMaxLowLevel.MotorType
+import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj2.command.Command
 import frc.robot.commands.DriveTeleopCommand
 
@@ -63,4 +64,9 @@ object DriveSubsystem : SubsystemBase() {
     override fun periodic() {
         // This method will be called once per scheduler run
     }
+
+    fun getGetDefaultCommand(): Command {
+        return DriveTeleopCommand(XboxController(Constants.OperatorConstants.DRIVER_CONTROLLER_PORT))
+    }
+
 }

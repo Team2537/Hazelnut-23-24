@@ -10,6 +10,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTeleopCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.TankDriveTeleopCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,6 +32,7 @@ public class RobotContainer
     private final XboxController driverController = new XboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
 
     private final DriveTeleopCommand driveTeleopCommand = new DriveTeleopCommand(driverController);
+    private final TankDriveTeleopCommand tankDriveTeleopCommand = new TankDriveTeleopCommand(driverController);
 
 
 
@@ -62,6 +64,10 @@ public class RobotContainer
         
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
+
+        Trigger toggleTankDrive = new Trigger(driverController::getAButton);
+        toggleTankDrive.toggleOnTrue(tankDriveTeleopCommand);
+
     }
     
     
