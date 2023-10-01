@@ -29,10 +29,8 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    private final CommandXboxController driverController = new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
-
-    private final DriveTeleopCommand driveTeleopCommand = new DriveTeleopCommand(driverController);
-    private final TankDriveTeleopCommand tankDriveTeleopCommand = new TankDriveTeleopCommand(driverController);
+    private final DriveTeleopCommand driveTeleopCommand = new DriveTeleopCommand(SingletonCommandXboxController.INSTANCE);
+    private final TankDriveTeleopCommand tankDriveTeleopCommand = new TankDriveTeleopCommand(SingletonCommandXboxController.INSTANCE);
 
 
 
@@ -65,7 +63,7 @@ public class RobotContainer
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
 
-        driverController.a().toggleOnTrue(tankDriveTeleopCommand);
+        SingletonCommandXboxController.INSTANCE.a().toggleOnTrue(tankDriveTeleopCommand);
 
     }
     
