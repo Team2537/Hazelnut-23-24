@@ -5,10 +5,9 @@ import frc.robot.Constants
 
 import com.revrobotics.CANSparkMax
 import com.revrobotics.CANSparkMaxLowLevel.MotorType
-import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj2.command.Command
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController
-import frc.robot.commands.DriveTeleopCommand
+import frc.robot.SingletonCommandXboxController
+import frc.robot.commands.drive.DriveTeleopCommand
 
 
 object DriveSubsystem : SubsystemBase() {
@@ -67,7 +66,7 @@ object DriveSubsystem : SubsystemBase() {
     }
 
     fun getGetDefaultCommand(): Command {
-        return DriveTeleopCommand(CommandXboxController(Constants.OperatorConstants.DRIVER_CONTROLLER_PORT))
+        return DriveTeleopCommand()
     }
 
 }

@@ -1,13 +1,14 @@
-package frc.robot.commands
+package frc.robot.commands.drive
 
 import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj2.command.CommandBase
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
+import frc.robot.SingletonCommandXboxController
 import frc.robot.subsystems.DriveSubsystem
 
-class TankDriveTeleopCommand(controller: CommandXboxController) : CommandBase() {
+class DriveTeleopCommand() : CommandBase() {
     private val driveSubsystem = DriveSubsystem
-    private val m_Controller = controller
+    private val m_Controller = SingletonCommandXboxController
 
 
     init {
@@ -18,7 +19,7 @@ class TankDriveTeleopCommand(controller: CommandXboxController) : CommandBase() 
     override fun initialize() {}
 
     override fun execute() {
-        driveSubsystem.tankDrive((m_Controller.getLeftY() / 2), (m_Controller.getRightY() / 2))
+        driveSubsystem.drive((m_Controller.getLeftY() / 2), (m_Controller.getRightX() / 4))
     }
 
     override fun isFinished(): Boolean {
@@ -26,7 +27,5 @@ class TankDriveTeleopCommand(controller: CommandXboxController) : CommandBase() 
         return false
     }
 
-    override fun end(interrupted: Boolean) {
-        DriveSubsystem.getGetDefaultCommand().schedule()
-    }
+    override fun end(interrupted: Boolean) {}
 }
