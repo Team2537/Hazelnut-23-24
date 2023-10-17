@@ -6,6 +6,7 @@ import frc.robot.Constants
 import com.revrobotics.CANSparkMax
 import com.revrobotics.CANSparkMaxLowLevel.MotorType
 import edu.wpi.first.wpilibj.XboxController
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import frc.robot.commands.DriveTeleopCommand
@@ -44,7 +45,6 @@ object DriveSubsystem : SubsystemBase() {
     }
 
     fun drive(speed: Double, rotation: Double) {
-
         leftMotor.set(speed - (rotation/2))
         rightMotor.set(speed + (rotation/2))
     }
@@ -64,10 +64,10 @@ object DriveSubsystem : SubsystemBase() {
 
     override fun periodic() {
         // This method will be called once per scheduler run
+        SmartDashboard.putNumber("Left Encoder", getLeftEncoderPosition())
+        SmartDashboard.putNumber("Right Encoder", getRightEncoderPosition())
     }
 
-    fun getGetDefaultCommand(): Command {
-        return DriveTeleopCommand(CommandXboxController(Constants.OperatorConstants.DRIVER_CONTROLLER_PORT))
-    }
+
 
 }
